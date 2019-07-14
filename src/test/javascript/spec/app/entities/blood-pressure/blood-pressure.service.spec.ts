@@ -34,7 +34,7 @@ describe('Service Tests', () => {
       it('should find an element', async () => {
         const returnedFromService = Object.assign(
           {
-            date: currentDate.format(DATE_FORMAT)
+            timestamp: currentDate.format(DATE_FORMAT)
           },
           elemDefault
         );
@@ -52,13 +52,13 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 0,
-            date: currentDate.format(DATE_FORMAT)
+            timestamp: currentDate.format(DATE_FORMAT)
           },
           elemDefault
         );
         const expected = Object.assign(
           {
-            date: currentDate
+            timestamp: currentDate
           },
           returnedFromService
         );
@@ -74,7 +74,7 @@ describe('Service Tests', () => {
       it('should update a BloodPressure', async () => {
         const returnedFromService = Object.assign(
           {
-            date: currentDate.format(DATE_FORMAT),
+            timestamp: currentDate.format(DATE_FORMAT),
             systolic: 1,
             diastolic: 1
           },
@@ -83,7 +83,7 @@ describe('Service Tests', () => {
 
         const expected = Object.assign(
           {
-            date: currentDate
+            timestamp: currentDate
           },
           returnedFromService
         );
@@ -99,7 +99,7 @@ describe('Service Tests', () => {
       it('should return a list of BloodPressure', async () => {
         const returnedFromService = Object.assign(
           {
-            date: currentDate.format(DATE_FORMAT),
+            timestamp: currentDate.format(DATE_FORMAT),
             systolic: 1,
             diastolic: 1
           },
@@ -107,7 +107,7 @@ describe('Service Tests', () => {
         );
         const expected = Object.assign(
           {
-            date: currentDate
+            timestamp: currentDate
           },
           returnedFromService
         );

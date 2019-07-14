@@ -59,14 +59,14 @@ export class BloodPressureService {
 
   protected convertDateFromClient(bloodPressure: IBloodPressure): IBloodPressure {
     const copy: IBloodPressure = Object.assign({}, bloodPressure, {
-      date: bloodPressure.date != null && bloodPressure.date.isValid() ? bloodPressure.date.format(DATE_FORMAT) : null
+      timestamp: bloodPressure.timestamp != null && bloodPressure.timestamp.isValid() ? bloodPressure.timestamp.format(DATE_FORMAT) : null
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.date = res.body.date != null ? moment(res.body.date) : null;
+      res.body.timestamp = res.body.timestamp != null ? moment(res.body.timestamp) : null;
     }
     return res;
   }
@@ -74,7 +74,7 @@ export class BloodPressureService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((bloodPressure: IBloodPressure) => {
-        bloodPressure.date = bloodPressure.date != null ? moment(bloodPressure.date) : null;
+        bloodPressure.timestamp = bloodPressure.timestamp != null ? moment(bloodPressure.timestamp) : null;
       });
     }
     return res;

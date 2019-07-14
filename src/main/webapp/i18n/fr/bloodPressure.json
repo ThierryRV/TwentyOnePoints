@@ -17,7 +17,7 @@
       "detail": {
         "title": "Blood Pressure"
       },
-      "date": "Date",
+      "timestamp": "Timestamp",
       "systolic": "Systolic",
       "diastolic": "Diastolic",
       "user": "User"

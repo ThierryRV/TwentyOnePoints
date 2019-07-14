@@ -72,7 +72,7 @@ class BloodPressureGatlingTest extends Simulation {
             .headers(headers_http_authenticated)
             .body(StringBody("""{
                 "id":null
-                , "date":"2020-01-01T00:00:00.000Z"
+                , "timestamp":"2020-01-01T00:00:00.000Z"
                 , "systolic":"0"
                 , "diastolic":"0"
                 }""")).asJson

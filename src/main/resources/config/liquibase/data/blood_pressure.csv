@@ -1,4 +1,4 @@
-id;date;systolic;diastolic
+id;timestamp;systolic;diastolic
 1;2019-07-14;79654;95071
 2;2019-07-14;73199;77969
 3;2019-07-14;59685;15601

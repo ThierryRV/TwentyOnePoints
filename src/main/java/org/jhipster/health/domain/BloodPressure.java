@@ -28,8 +28,8 @@ public class BloodPressure implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "date", nullable = false)
-    private LocalDate date;
+    @Column(name = "timestamp", nullable = false)
+    private LocalDate timestamp;
 
     @Column(name = "systolic")
     private Integer systolic;
@@ -50,17 +50,17 @@ public class BloodPressure implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getTimestamp() {
+        return timestamp;
     }
 
-    public BloodPressure date(LocalDate date) {
-        this.date = date;
+    public BloodPressure timestamp(LocalDate timestamp) {
+        this.timestamp = timestamp;
         return this;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setTimestamp(LocalDate timestamp) {
+        this.timestamp = timestamp;
     }
 
     public Integer getSystolic() {
@@ -123,7 +123,7 @@ public class BloodPressure implements Serializable {
     public String toString() {
         return "BloodPressure{" +
             "id=" + getId() +
-            ", date='" + getDate() + "'" +
+            ", timestamp='" + getTimestamp() + "'" +
             ", systolic=" + getSystolic() +
             ", diastolic=" + getDiastolic() +
             "}";

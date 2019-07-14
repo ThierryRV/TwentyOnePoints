@@ -17,7 +17,7 @@
       "detail": {
         "title": "Weight"
       },
-      "date": "Date",
+      "timestamp": "Timestamp",
       "weight": "Weight",
       "user": "User"
     }

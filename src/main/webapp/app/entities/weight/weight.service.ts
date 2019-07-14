@@ -59,14 +59,14 @@ export class WeightService {
 
   protected convertDateFromClient(weight: IWeight): IWeight {
     const copy: IWeight = Object.assign({}, weight, {
-      date: weight.date != null && weight.date.isValid() ? weight.date.format(DATE_FORMAT) : null
+      timestamp: weight.timestamp != null && weight.timestamp.isValid() ? weight.timestamp.format(DATE_FORMAT) : null
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.date = res.body.date != null ? moment(res.body.date) : null;
+      res.body.timestamp = res.body.timestamp != null ? moment(res.body.timestamp) : null;
     }
     return res;
   }
@@ -74,7 +74,7 @@ export class WeightService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((weight: IWeight) => {
-        weight.date = weight.date != null ? moment(weight.date) : null;
+        weight.timestamp = weight.timestamp != null ? moment(weight.timestamp) : null;
       });
     }
     return res;

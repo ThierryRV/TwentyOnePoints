@@ -18,11 +18,11 @@ export class BloodPressureUpdateComponent implements OnInit {
   isSaving: boolean;
 
   users: IUser[];
-  dateDp: any;
+  timestampDp: any;
 
   editForm = this.fb.group({
     id: [],
-    date: [null, [Validators.required]],
+    timestamp: [null, [Validators.required]],
     systolic: [],
     diastolic: [],
     user: []
@@ -53,7 +53,7 @@ export class BloodPressureUpdateComponent implements OnInit {
   updateForm(bloodPressure: IBloodPressure) {
     this.editForm.patchValue({
       id: bloodPressure.id,
-      date: bloodPressure.date,
+      timestamp: bloodPressure.timestamp,
       systolic: bloodPressure.systolic,
       diastolic: bloodPressure.diastolic,
       user: bloodPressure.user
@@ -78,7 +78,7 @@ export class BloodPressureUpdateComponent implements OnInit {
     return {
       ...new BloodPressure(),
       id: this.editForm.get(['id']).value,
-      date: this.editForm.get(['date']).value,
+      timestamp: this.editForm.get(['timestamp']).value,
       systolic: this.editForm.get(['systolic']).value,
       diastolic: this.editForm.get(['diastolic']).value,
       user: this.editForm.get(['user']).value

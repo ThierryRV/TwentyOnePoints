@@ -18,11 +18,11 @@ export class WeightUpdateComponent implements OnInit {
   isSaving: boolean;
 
   users: IUser[];
-  dateDp: any;
+  timestampDp: any;
 
   editForm = this.fb.group({
     id: [],
-    date: [null, [Validators.required]],
+    timestamp: [null, [Validators.required]],
     weight: [],
     user: []
   });
@@ -52,7 +52,7 @@ export class WeightUpdateComponent implements OnInit {
   updateForm(weight: IWeight) {
     this.editForm.patchValue({
       id: weight.id,
-      date: weight.date,
+      timestamp: weight.timestamp,
       weight: weight.weight,
       user: weight.user
     });
@@ -76,7 +76,7 @@ export class WeightUpdateComponent implements OnInit {
     return {
       ...new Weight(),
       id: this.editForm.get(['id']).value,
-      date: this.editForm.get(['date']).value,
+      timestamp: this.editForm.get(['timestamp']).value,
       weight: this.editForm.get(['weight']).value,
       user: this.editForm.get(['user']).value
     };

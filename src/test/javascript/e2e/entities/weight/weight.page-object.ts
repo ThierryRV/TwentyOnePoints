@@ -26,7 +26,7 @@ export class WeightUpdatePage {
   pageTitle = element(by.id('jhi-weight-heading'));
   saveButton = element(by.id('save-entity'));
   cancelButton = element(by.id('cancel-save'));
-  dateInput = element(by.id('field_date'));
+  timestampInput = element(by.id('field_timestamp'));
   weightInput = element(by.id('field_weight'));
   userSelect = element(by.id('field_user'));
 
@@ -34,12 +34,12 @@ export class WeightUpdatePage {
     return this.pageTitle.getAttribute('jhiTranslate');
   }
 
-  async setDateInput(date) {
-    await this.dateInput.sendKeys(date);
+  async setTimestampInput(timestamp) {
+    await this.timestampInput.sendKeys(timestamp);
   }
 
-  async getDateInput() {
-    return await this.dateInput.getAttribute('value');
+  async getTimestampInput() {
+    return await this.timestampInput.getAttribute('value');
   }
 
   async setWeightInput(weight) {
