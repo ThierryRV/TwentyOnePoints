@@ -1,13 +1,17 @@
 package org.jhipster.health.web.rest;
 
+import org.aspectj.lang.annotation.Before;
 import org.jhipster.health.TwentyOnePointsApp;
 import org.jhipster.health.domain.Points;
 import org.jhipster.health.repository.PointsRepository;
+import org.jhipster.health.repository.UserRepository;
 import org.jhipster.health.repository.search.PointsSearchRepository;
 import org.jhipster.health.web.rest.errors.ExceptionTranslator;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,6 +39,14 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import org.jhipster.health.domain.User;
+import org.springframework.web.context.WebApplicationContext;
+import java.time.DayOfWeek;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+
 /**
  * Integration tests for the {@Link PointsResource} REST controller.
  */
@@ -58,6 +70,11 @@ public class PointsResourceIT {
 
     @Autowired
     private PointsRepository pointsRepository;
+    @Autowired
+    private PointsSearchRepository pointsSearchRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     /**
      * This repository is mocked in the org.jhipster.health.repository.search test package.
@@ -82,6 +99,9 @@ public class PointsResourceIT {
     @Autowired
     private Validator validator;
 
+    @Autowired
+    private WebApplicationContext context;
+
     private MockMvc restPointsMockMvc;
 
     private Points points;
@@ -89,7 +109,7 @@ public class PointsResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PointsResource pointsResource = new PointsResource(pointsRepository, mockPointsSearchRepository);
+        final PointsResource pointsResource = new PointsResource(pointsRepository, pointsSearchRepository, userRepository);
         this.restPointsMockMvc = MockMvcBuilders.standaloneSetup(pointsResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -139,8 +159,15 @@ public class PointsResourceIT {
     public void createPoints() throws Exception {
         int databaseSizeBeforeCreate = pointsRepository.findAll().size();
 
+        // Create security-aware mockMvc
+        restPointsMockMvc = MockMvcBuilders
+            .webAppContextSetup(context)
+            .apply(springSecurity())
+            .build();
+
         // Create the Points
         restPointsMockMvc.perform(post("/api/points")
+            .with(user("user"))
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(points)))
             .andExpect(status().isCreated());
@@ -206,8 +233,17 @@ public class PointsResourceIT {
         // Initialize the database
         pointsRepository.saveAndFlush(points);
 
-        // Get all the pointsList
-        restPointsMockMvc.perform(get("/api/points?sort=id,desc"))
+        // Create security-aware mockMvc
+
+        restPointsMockMvc = MockMvcBuilders
+            .webAppContextSetup(context)
+            .apply(springSecurity())
+            .build();
+
+
+            // Get all the pointsList
+        restPointsMockMvc.perform(get("/api/points?sort=id,desc")
+            .with(user("admin").roles("ADMIN")))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(points.getId().intValue())))
@@ -263,7 +299,14 @@ public class PointsResourceIT {
             .alcohol(UPDATED_ALCOHOL)
             .notes(UPDATED_NOTES);
 
+        // Create security-aware mockMvc
+        restPointsMockMvc = MockMvcBuilders
+            .webAppContextSetup(context)
+            .apply(springSecurity())
+            .build();
+
         restPointsMockMvc.perform(put("/api/points")
+            .with(user("user"))
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(updatedPoints)))
             .andExpect(status().isOk());

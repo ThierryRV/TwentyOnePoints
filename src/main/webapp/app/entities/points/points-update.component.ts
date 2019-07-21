@@ -70,7 +70,9 @@ export class PointsUpdateComponent implements OnInit {
 
   save() {
     this.isSaving = true;
+
     const points = this.createFromForm();
+
     if (points.id !== undefined) {
       this.subscribeToSaveResponse(this.pointsService.update(points));
     } else {
@@ -83,9 +85,9 @@ export class PointsUpdateComponent implements OnInit {
       ...new Points(),
       id: this.editForm.get(['id']).value,
       date: this.editForm.get(['date']).value,
-      exercise: this.editForm.get(['exercise']).value,
-      meals: this.editForm.get(['meals']).value,
-      alcohol: this.editForm.get(['alcohol']).value,
+      exercise: this.editForm.get(['exercise']).value ? 1 : 0,
+      meals: this.editForm.get(['meals']).value ? 1 : 0,
+      alcohol: this.editForm.get(['alcohol']).value ? 1 : 0,
       notes: this.editForm.get(['notes']).value,
       user: this.editForm.get(['user']).value
     };
